@@ -1,12 +1,18 @@
 "use server";
 
 import { auth } from "@/lib/auth";
+import { success } from "better-auth";
 
 export const SignInUser = async (email: string, password: string) => {
-  const response = await auth.api.signInEmail({
-    body: { email, password },
-    asResponse: true,
-  });
+  try {
+    await auth.api.signInEmail({
+      body: { email, password },
+      asResponse: true,
+    });
+    return { success: true, message: "User SignedIn SuccessFully!" };
+  } catch (error) {
+    return { success: false, message: "Failed To SignIN!" };
+  }
 };
 
 export const SignUpuser = async (
@@ -21,7 +27,10 @@ export const SignUpuser = async (
         password,
         name,
       },
-      asResponse:true,
+      asResponse: true,
     });
-  } catch (error) {}
+    return{success:true,message:"User Created SuccessFully!"}
+  } catch (error) {
+    return{success:false,message:"Failed To SignUp!"}
+  }
 };

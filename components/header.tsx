@@ -1,12 +1,20 @@
 'use client'
 import Link from 'next/link'
 import { Logo } from '@/components/logo'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, LogOut, User } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import React from 'react'
 import { cn } from '@/lib/utils'
 import { useScroll } from 'motion/react'
 import ModeToggle from './mode-toggle'
+import { useSession, signOut } from '@/lib/auth-client'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 
 const menuItems = [
     { name: 'Features', href: '#link' },
@@ -18,6 +26,7 @@ const menuItems = [
 export const HeroHeader = () => {
     const [menuState, setMenuState] = React.useState(false)
     const [scrolled, setScrolled] = React.useState(false)
+    const { data: session, isPending } = useSession()
 
     const { scrollYProgress } = useScroll()
 
@@ -27,6 +36,15 @@ export const HeroHeader = () => {
         })
         return () => unsubscribe()
     }, [scrollYProgress])
+
+    const handleSignOut = async () => {
+        try {
+            await signOut()
+            window.location.href = '/' // Redirect to home after sign out
+        } catch (error) {
+            console.error('Sign out error:', error)
+        }
+    }
 
     return (
         <header>
@@ -82,21 +100,59 @@ export const HeroHeader = () => {
                             </div>
                             <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
                                 <ModeToggle />
-                                <Button
-                                    asChild
-                                    variant="outline"
-                                    size="sm">
-                                    <Link href="#">
-                                        <span>Login</span>
-                                    </Link>
-                                </Button>
-                                <Button
-                                    asChild
-                                    size="sm">
-                                    <Link href="#">
-                                        <span>Sign Up</span>
-                                    </Link>
-                                </Button>
+                                {isPending ? (
+                                    <div className="flex gap-3">
+                                        <div className="h-9 w-16 bg-muted animate-pulse rounded-md" />
+                                        <div className="h-9 w-20 bg-muted animate-pulse rounded-md" />
+                                    </div>
+                                ) : session?.user ? (
+                                    <DropdownMenu>
+                                        <DropdownMenuTrigger asChild>
+                                            <Button
+                                                variant="outline"
+                                                size="sm"
+                                                className="gap-2"
+                                            >
+                                                <User className="h-4 w-4" />
+                                                {session.user.name || session.user.email}
+                                            </Button>
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent align="end" className="w-56">
+                                            <DropdownMenuItem asChild>
+                                                <Link href="/profile" className="cursor-pointer">
+                                                    <User className="mr-2 h-4 w-4" />
+                                                    Profile
+                                                </Link>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuSeparator />
+                                            <DropdownMenuItem
+                                                onClick={handleSignOut}
+                                                className="cursor-pointer text-destructive focus:text-destructive"
+                                            >
+                                                <LogOut className="mr-2 h-4 w-4" />
+                                                Sign Out
+                                            </DropdownMenuItem>
+                                        </DropdownMenuContent>
+                                    </DropdownMenu>
+                                ) : (
+                                    <>
+                                        <Button
+                                            asChild
+                                            variant="outline"
+                                            size="sm">
+                                            <Link href="/signin">
+                                                <span>Sign In</span>
+                                            </Link>
+                                        </Button>
+                                        <Button
+                                            asChild
+                                            size="sm">
+                                            <Link href="/signup">
+                                                <span>Sign Up</span>
+                                            </Link>
+                                        </Button>
+                                    </>
+                                )}
                             </div>
                         </div>
                     </div>
