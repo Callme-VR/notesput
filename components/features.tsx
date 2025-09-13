@@ -11,7 +11,7 @@ export default function Features() {
                     <p className="mt-4">Libero sapiente aliquam quibusdam aspernatur, praesentium iusto repellendus.</p>
                 </div>
                 <div className="@min-4xl:max-w-full @min-4xl:grid-cols-3 mx-auto mt-8 grid max-w-sm gap-6 *:text-center md:mt-16">
-                    <Card className="group shadow-zinc-950/5">
+                    <Card className="group bg-background">
                         <CardHeader className="pb-3">
                             <CardDecorator>
                                 <Zap
@@ -28,7 +28,7 @@ export default function Features() {
                         </CardContent>
                     </Card>
 
-                    <Card className="group shadow-zinc-950/5">
+                    <Card className="group bg-background">
                         <CardHeader className="pb-3">
                             <CardDecorator>
                                 <Settings2
@@ -45,7 +45,7 @@ export default function Features() {
                         </CardContent>
                     </Card>
 
-                    <Card className="group shadow-zinc-950/5">
+                    <Card className="group bg-background">
                         <CardHeader className="pb-3">
                             <CardDecorator>
                                 <Sparkles
@@ -73,7 +73,6 @@ const CardDecorator = ({ children }: { children: ReactNode }) => (
             aria-hidden
             className="absolute inset-0 bg-[linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] bg-[size:24px_24px] dark:opacity-50"
         />
-
         <div className="bg-background absolute inset-0 m-auto flex size-12 items-center justify-center border-l border-t">{children}</div>
     </div>
 )
