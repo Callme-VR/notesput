@@ -7,9 +7,8 @@ import { signIn } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Eye, EyeOff, Mail, Lock } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function SignInPage() {
   const [formData, setFormData] = useState({
@@ -77,123 +76,196 @@ export default function SignInPage() {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    // Clear errors when user starts typing
     if (error) setError("");
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-muted/20 p-4">
-      <Card className="w-full max-w-md shadow-2xl border-0 bg-card/80 backdrop-blur">
-        <CardHeader className="space-y-1 text-center">
-          <CardTitle className="text-2xl font-bold tracking-tight">
-            Welcome Back
-          </CardTitle>
-          <CardDescription>
-            Sign in to your account to continue
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {error && (
-              <Alert variant="destructive">
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
-            )}
-            
-            {success && (
-              <Alert variant="success">
-                <AlertDescription>{success}</AlertDescription>
-              </Alert>
-            )}
+    <div className="min-h-screen bg-black flex items-center justify-center p-4">
+      <div className="w-full max-w-md">
+        <div className="border border-zinc-800 rounded-lg p-8 bg-black">
+          {/* Logo */}
+          <div className="flex justify-center mb-8">
+          </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="Enter your email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className="pl-10"
-                  required
-                  disabled={isLoading}
+          {/* Header */}
+          <div className="text-center mb-8">
+            <h1 className="text-2xl font-semibold text-white mb-2">
+              Sign In to Notesput
+            </h1>
+            <p className="text-zinc-400">
+              Welcome back! Please sign in to continue
+            </p>
+          </div>
+
+          {/* Social Login Buttons */}
+          <div className="grid grid-cols-2 gap-3 mb-6">
+            <Button
+              variant="outline"
+              className="h-12 bg-transparent border-zinc-700 hover:bg-zinc-800 text-white flex items-center justify-center gap-2"
+              disabled={isLoading}
+            >
+              <svg className="w-5 h-5" viewBox="0 0 24 24">
+                <path
+                  fill="#4285F4"
+                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
                 />
-              </div>
+                <path
+                  fill="#34A853"
+                  d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                />
+                <path
+                  fill="#FBBC05"
+                  d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                />
+                <path
+                  fill="#EA4335"
+                  d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                />
+              </svg>
+              Google
+            </Button>
+            <Button
+              variant="outline"
+              className="h-12 bg-transparent border-zinc-700 hover:bg-zinc-800 text-white flex items-center justify-center gap-2"
+              disabled={isLoading}
+            >
+              <svg className="w-5 h-5" viewBox="0 0 24 24">
+                <path
+                  fill="#F25022"
+                  d="M1 1h10.5v10.5H1z"
+                />
+                <path
+                  fill="#7FBA00"
+                  d="M12.5 1H24v10.5H12.5z"
+                />
+                <path
+                  fill="#00A4EF"
+                  d="M1 12.5h10.5V24H1z"
+                />
+                <path
+                  fill="#FFB900"
+                  d="M12.5 12.5H24V24H12.5z"
+                />
+              </svg>
+              Microsoft
+            </Button>
+          </div>
+
+          {/* Divider */}
+          <div className="relative mb-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-zinc-700"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-2 text-zinc-400 bg-black">or</span>
+            </div>
+          </div>
+
+          {error && (
+            <Alert variant="destructive" className="mb-4 bg-red-950/20 border-red-800 text-red-300">
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+          
+          {success && (
+            <Alert variant="success" className="mb-4 bg-green-950/20 border-green-800 text-green-300">
+              <AlertDescription>{success}</AlertDescription>
+            </Alert>
+          )}
+
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Email */}
+            <div>
+              <Label htmlFor="email" className="text-white text-sm mb-2 block">
+                Username
+              </Label>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                className="h-12 bg-transparent border-zinc-700 text-white placeholder:text-zinc-500 focus:border-zinc-500 focus:ring-0"
+                required
+                disabled={isLoading}
+              />
             </div>
 
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <Label htmlFor="password">Password</Label>
-                <Link
-                  href="/forgot-password"
-                  className="text-sm font-medium text-primary hover:underline transition-colors"
-                >
-                  Forgot password?
-                </Link>
-              </div>
+            {/* Password */}
+            <div>
+              <Label htmlFor="password" className="text-white text-sm mb-2 block">
+                Password
+              </Label>
               <div className="relative">
-                <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                 <Input
                   id="password"
                   name="password"
                   type={showPassword ? "text" : "password"}
-                  placeholder="Enter your password"
                   value={formData.password}
                   onChange={handleInputChange}
-                  className="pl-10 pr-10"
+                  className="h-12 bg-transparent border-zinc-700 text-white placeholder:text-zinc-500 focus:border-zinc-500 focus:ring-0 pr-10"
                   required
                   disabled={isLoading}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-3 h-4 w-4 text-muted-foreground hover:text-foreground transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white transition-colors"
                   disabled={isLoading}
                 >
-                  {showPassword ? <EyeOff /> : <Eye />}
+                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
             </div>
 
-            <div className="flex items-center space-x-2">
-              <input
-                id="remember-me"
-                type="checkbox"
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-                className="h-4 w-4 rounded border border-input bg-background text-primary focus:ring-2 focus:ring-ring focus:ring-offset-2"
-                disabled={isLoading}
-              />
-              <Label htmlFor="remember-me" className="text-sm">
-                Remember me
-              </Label>
+            {/* Remember Me & Forgot Password */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <input
+                  id="remember-me"
+                  type="checkbox"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                  className="h-4 w-4 rounded border-zinc-700 bg-transparent text-white focus:ring-2 focus:ring-zinc-500"
+                  disabled={isLoading}
+                />
+                <Label htmlFor="remember-me" className="text-sm text-zinc-400">
+                  Remember me
+                </Label>
+              </div>
+              <Link
+                href="/forgot-password"
+                className="text-sm text-zinc-400 hover:text-white transition-colors"
+              >
+                Forgot password?
+              </Link>
             </div>
 
+            {/* Submit Button */}
             <Button
               type="submit"
-              className="w-full"
+              className="w-full h-12 bg-white text-black hover:bg-zinc-200 font-medium mt-6"
               disabled={isLoading}
             >
-              {isLoading ? "Signing In..." : "Sign In"}
+              {isLoading ? "Signing In..." : "Continue"}
             </Button>
           </form>
 
-          <div className="mt-6 text-center">
-            <p className="text-sm text-muted-foreground">
-              Don't have an account?{" "}
-              <Link
-                href="/signup"
-                className="font-medium text-primary hover:underline transition-colors"
-              >
-                Sign up
+          {/* Sign Up Link */}
+          <div className="mt-6">
+            <Button
+              asChild
+              variant="outline"
+              className="w-full h-12 bg-zinc-800 border-zinc-700 hover:bg-zinc-700 text-white"
+            >
+              <Link href="/signup">
+                Don't have an account? Sign Up
               </Link>
-            </p>
+            </Button>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }
