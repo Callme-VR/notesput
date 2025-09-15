@@ -4,7 +4,6 @@ import { auth } from "@/lib/auth";
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-
   // Public routes that don't require authentication
   const publicRoutes = [
     "/",
@@ -13,12 +12,10 @@ export async function middleware(request: NextRequest) {
     "/forgot-password",
     "/api/auth",
   ];
-
   // Check if the current path is public
   const isPublicRoute = publicRoutes.some(route => 
     pathname === route || pathname.startsWith(`${route}/`)
   );
-
   // Skip middleware for public routes and static files
   if (
     isPublicRoute ||
