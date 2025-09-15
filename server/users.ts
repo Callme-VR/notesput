@@ -1,7 +1,6 @@
 "use server";
 
 import { auth } from "@/lib/auth";
-import { success } from "better-auth";
 
 export const SignInUser = async (email: string, password: string) => {
   try {

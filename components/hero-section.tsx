@@ -113,26 +113,15 @@ export default function HeroSection() {
                             }}>
                             <div className="mask-b-from-55% relative -mr-56 mt-8 overflow-hidden px-2 sm:mr-0 sm:mt-12 md:mt-20">
                                 <div className="inset-shadow-2xs ring-background dark:inset-shadow-white/20 bg-background relative mx-auto max-w-5xl overflow-hidden rounded-2xl border p-4 shadow-lg shadow-zinc-950/15 ring-1">
-                                    <Image
-                                        className="bg-background aspect-15/8 relative hidden rounded-2xl dark:block"
-                                        src="/mail2.png"
-                                        alt="app screen"
-                                        width="2700"
-                                        height="1440"
-                                    />
-                                    <Image
-                                        className="z-2 border-border/25 aspect-15/8 relative rounded-2xl border dark:hidden"
-                                        src="/mail2-light.png"
-                                        alt="app screen"
-                                        width="2700"
-                                        height="1440"
-                                    />
+                                    <div className="bg-gradient-to-br from-zinc-100 to-zinc-200 dark:from-zinc-800 dark:to-zinc-900 aspect-15/8 relative rounded-2xl flex items-center justify-center">
+                                        <p className="text-zinc-500 dark:text-zinc-400 text-lg">App Preview Coming Soon</p>
+                                    </div>
                                 </div>
                             </div>
                         </AnimatedGroup>
                     </div>
                 </section>
-       
+
             </main>
         </>
     )
